@@ -1,5 +1,5 @@
 /*
- * *** YOUR NAME GOES HERE / YOUR SECTION NUMBER ***
+ * Avery Walwyn | Section 002
  *
  * This HashingProblems object contains three methods / problems that you must
  * complete utilize the HashMap object within the Java's Collection Framework Library.
@@ -32,6 +32,25 @@ class HashingProblems {
      */
 
     public double getAverage(HashMap<Integer, Integer> map, int[] array) {
+        double sum = 0.0;
+        int commonVals = 0;
+        double average = 0.0/0.0;
+
+        //traverse array for common keys
+        for (int num: array) {
+            if (map.containsKey(num)) {
+                sum += map.get(num);
+                commonVals++;
+            }
+        }
+
+        if (commonVals != 0) {
+            average = sum/commonVals;
+
+        }
+
+        return average;
+        
 
         /*
          * ADD YOUR CODE HERE - DO NOT FORGET TO ADD YOU NAME AT TOP OF FILE
@@ -40,8 +59,7 @@ class HashingProblems {
          * returning 0.0 is NOT correct, as that is not the average value. Whereas
          * returning 0.0/0.0 IS correct (which would return a non-number).
          */
-
-         return 0.0 / 0.0;
+        
   }
 
 
@@ -56,11 +74,13 @@ class HashingProblems {
     
       ArrayList<String> result = new ArrayList<>();
 
-      /*
-       * ADD YOUR CODE HERE
-       *
-       * Hint: Consider iterating over the HashMap using the keySet method.
-       */
+      //iterate through map using ketSet MEthod
+      for (Integer key: map.keySet()) {
+        if (key%2 != 0) {
+            result.add(map.get(key));
+        }
+      }
+
 
 
       return result;
@@ -105,12 +125,20 @@ class HashingProblems {
    */
 
   public int twoSums(int[] numbers, int k) {
+    HashSet<Integer> set = new HashSet<>();
+    int count = 0;
 
-      /*
-       * ADD YOUR CODE HERE
-       */
+    //iterate through param array and check for differences of k
+    for (int num : numbers) {
+        if (set.contains(num-k) || set.contains(num+k)) {
+            count++;
+            
+        }
+        set.add(num);
 
-      return -1;
+    }
+
+      return count;
   }
 
 } /* end class HashingProblems */

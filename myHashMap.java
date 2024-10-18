@@ -1,5 +1,5 @@
 /*
- * *** YOUR NAME GOES HERE / YOUR SECTION NUMBER ***
+ * Avery Walwyn | Section 002
  *
  * This hashMap object represents an over simplification of Java's implementation of HashMap within
  * Java's Collection Framework Library. You are to complete the following methods:
@@ -220,17 +220,28 @@ class myHashMap<K,V> {
      */
 
     public V remove(K key) {
+        int index = getBucketIndex(key);
+        
+        
+        //make pointer for current and prev
+        HashNode<K, V> current = bucket.get(index);
+        HashNode<K, V> prev = null;
 
-        /*
-         * ADD YOUR CODE HERE
-         *
-         * Review the code in the whole object to understand teh data structures layout.
-         * Additionally, review the method put() for inserting a new Key / Value pair into
-         * the HashMap. This method will do the opposite by removing an element. Do see
-         * the return value discussion in this method's prologue to make sure the correct
-         * return value is returned the invoking function based on the remove outcome.
-         */
-
+        //gurd against null line and traverse
+        while (current != null) {
+            if (current.key.equals(key)) {
+                if (prev == null) {
+                    bucket.set(index, current.next);
+                } else {
+                    prev.next = current.next;
+                }
+                size--; 
+                return current.value;
+               
+            }
+            prev = current;
+            current = current.next;
+        }
         return null;
     }
 
@@ -398,15 +409,21 @@ class myHashMap<K,V> {
      */
 
     public V replace(K key, V val) {
+        int index = getBucketIndex(key);
+        V returned = null;
 
-        /*
-         * ADD YOUR CODE HERE - DO NOT FORGET TO ADD YOUR NAME AT TOP OF FILE
-         *
-         * Make sure you return the proper value based on the outcome of this method's
-         * replace (see method's prologue above).
-         */
-
-        return val;
+        //current pointer
+        HashNode<K, V> current = bucket.get(index);
+        while (current!= null) {
+            if (current.key.equals(key)) {
+                //hold old value to return and update
+                V oldVal = current.value;
+                current.value = val;
+                returned = oldVal;
+            }
+            current = current.next;
+        }
+        return returned;
     }
 
     
@@ -426,15 +443,19 @@ class myHashMap<K,V> {
      */
 
     public boolean replace(K key, V oldVal, V newVal) {
+        boolean replaced = false;
+        V currentVal = get(key);
+        //check val against oldVal and guard against null
+        if (currentVal != null && currentVal.equals(oldVal)) {
+            replace(key, newVal);
+            replaced = true;
+            
 
-        /*
-         * ADD YOUR CODE HERE
-         *
-         * This method should apply the precondition (aka, the Key already exists with the
-         * value 'oldval', and is so, it SHOULD call replace(K, V) for code reuse.
-         */
+        }
 
-        return false;
+
+
+        return replaced;
     }
 
 
